@@ -1,6 +1,6 @@
 import { api } from 'boot/axios';
 
-export class ModelDatabaseConnector {
+class ModelDatabaseConnector {
   constructor(public Model: string) {
     this.Model = Model.toLocaleLowerCase();
   }
@@ -25,3 +25,5 @@ export class ModelDatabaseConnector {
     return await api.delete(`v1/${this.Model}/${id}`);
   }
 }
+
+export { ModelDatabaseConnector };

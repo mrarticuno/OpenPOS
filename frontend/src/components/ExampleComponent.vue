@@ -52,9 +52,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    console.log('ExampleComponent mounted');
-    console.log(this.store, this.store.user);
-    this.store.getById('1');
+    // this.store.getById('1');
   },
   setup(props) {
     const store = userStore();

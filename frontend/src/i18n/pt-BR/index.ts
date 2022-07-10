@@ -13,6 +13,8 @@ const inputs = {
 };
 
 const helper_texts = {
+  search_placeholder: 'Digite sua pesquisa aqui',
+  search_short_placeholder: 'Pesquisar',
   not_registered: 'Não tem conta?',
   register_here: 'Registre-se aqui',
   forgot_password: 'Esqueci minha senha',

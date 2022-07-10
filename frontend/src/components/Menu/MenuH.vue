@@ -3,7 +3,7 @@
     <div v-for="(item, index) in menu" :key="index" class="menu-item-container">
       <div
         v-if="item.path"
-        :class="dark ? 'menu-item-dark' : 'menu-item'"
+        :class="dark ? 'menu-item-dark' : 'menu-item-horizontal'"
         @click="showMenu()"
       >
         <q-icon
@@ -15,10 +15,10 @@
         <img
           v-if="item.image.length > 0"
           src="~assets/Logo.png"
-          class="item-detail"
+          class="item-detail invert noselect"
         />
       </div>
-      <div v-else class="menu-item" @click="showMenu()">
+      <div v-else class="menu-item-horizontal" @click="showMenu()">
         <q-icon
           v-if="item.icon.length > 0"
           :name="item.icon"
@@ -28,7 +28,7 @@
         <img
           v-if="item.image.length > 0"
           src="~assets/Logo.png"
-          class="item-detail"
+          class="item-detail invert noselect"
         />
       </div>
     </div>
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { geralStore } from 'src/stores/geral-store';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -48,7 +49,7 @@ export default defineComponent({
   },
   methods: {
     showMenu() {
-      // this.SHOWWINDOWSMENU(true);
+      this.store.toggleMenu();
     },
     changeRoute(route) {
       void this.$router.push({ path: route });
@@ -66,6 +67,12 @@ export default defineComponent({
       ],
     };
   },
+  setup() {
+    const store = geralStore();
+    return {
+      store,
+    };
+  },
 });
 </script>
 
@@ -78,7 +85,7 @@ export default defineComponent({
 .menu-item-container {
   width: auto;
 }
-.menu-item {
+.menu-item-horizontal {
   transition: 0.1s all ease-in;
   :hover {
     background: rgba(255, 255, 255, 0.658);
@@ -95,6 +102,20 @@ export default defineComponent({
     cursor: pointer;
     border-radius: 3px;
   }
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.invert {
+  filter: invert(100%);
 }
 .menu-horizontal-center {
   flex: 1 1 0%;

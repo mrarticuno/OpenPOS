@@ -1,5 +1,9 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout
+    view="lHh Lpr lFf"
+    v-on:dblclick="store.isMenuOpen ? store.toggleMenu() : null"
+  >
+    <menu-windows class="menu-position"></menu-windows>
     <q-header elevated class="mobile-only">
       <q-toolbar class="bg-primary text-white rounded-borders">
         <q-btn
@@ -20,13 +24,7 @@
           class="q-ml-md"
         >
           <template v-slot:append>
-            <q-icon v-if="text === ''" name="search" />
-            <q-icon
-              v-else
-              name="clear"
-              class="cursor-pointer"
-              @click="text = ''"
-            />
+            <q-icon name="search" />
           </template>
         </q-input>
       </q-toolbar>
@@ -38,8 +36,6 @@
       </q-list>
     </q-drawer>
 
-    <menu-windows class="menu-position"></menu-windows>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -48,6 +44,7 @@
 
 <script lang="ts">
 import MenuWindows from 'src/components/Menu/MenuWindows.vue';
+import { geralStore } from 'src/stores/geral-store';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
@@ -57,11 +54,13 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
+    const store = geralStore();
     const text = ref('');
 
     return {
       text,
       leftDrawerOpen,
+      store,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
@@ -74,5 +73,8 @@ export default defineComponent({
 body {
   background-image: url('https://win11.vercel.app/assets/default_dark_compressed.4fd030c7.jpg');
   background-size: cover;
+}
+.menu-position {
+  z-index: 5;
 }
 </style>

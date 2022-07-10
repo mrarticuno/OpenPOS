@@ -1,60 +1,179 @@
 <template>
-  <div class="menu_windows" v-show="exibir">
-    <div class="inner_container">
+  <div class="menu_windows row" v-show="store.isMenuOpen">
+    <div class="inner_container col">
       <div class="search_container">
-        <div class="_icon_puygg_35">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#0384c0 "
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-search"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
+        <q-input
+          v-model="text"
+          color="4489aa"
+          bg-color="transparent"
+          label-color="white"
+          dense
+          rounded
+          outlined
+          dark
+          :placeholder="$t('search_placeholder')"
+        >
+          <template v-slot:prepend>
+            <q-icon name="search" color="primary" />
+          </template>
+          <template v-slot:append>
+            <q-icon
+              v-if="text !== ''"
+              name="clear"
+              class="cursor-pointer"
+              @click="text = ''"
+            />
+          </template>
+        </q-input>
+      </div>
+    </div>
+    <div class="inner_container col">
+      <div class="shortcut_container row">
+        <div
+          v-for="(item, index) of menuitens"
+          :key="index"
+          class="menu-item col-3"
+          @click="store.openWindow(item.path)"
+        >
+          <q-icon :name="item.icon" color="white" size="md" />
+          <p class="text-white">{{ item.name }}</p>
         </div>
-        <input
-          class="_search_input_puygg_19"
-          type="text"
-          placeholder="Type here to search"
-          data-np-checked="1"
-        />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { geralStore } from 'src/stores/geral-store';
+import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   name: 'MenuWindows',
   data() {
     return {
-      exibir: false,
+      menuitens: [
+        {
+          name: 'Home',
+          icon: 'home',
+          path: '/',
+        },
+        {
+          name: 'Gerenciar',
+          icon: 'settings',
+          path: '/gerenciar',
+        },
+        {
+          name: 'Sair',
+          icon: 'mdi-exit-to-app',
+          path: '/sair',
+        },
+        {
+          name: 'Home',
+          icon: 'home',
+          path: '/',
+        },
+        {
+          name: 'Gerenciar',
+          icon: 'settings',
+          path: '/gerenciar',
+        },
+        {
+          name: 'Sair',
+          icon: 'mdi-exit-to-app',
+          path: '/sair',
+        },
+        {
+          name: 'Home',
+          icon: 'home',
+          path: '/',
+        },
+        {
+          name: 'Gerenciar',
+          icon: 'settings',
+          path: '/gerenciar',
+        },
+        {
+          name: 'Sair',
+          icon: 'mdi-exit-to-app',
+          path: '/sair',
+        },
+        {
+          name: 'Home',
+          icon: 'home',
+          path: '/',
+        },
+        {
+          name: 'Gerenciar',
+          icon: 'settings',
+          path: '/gerenciar',
+        },
+        {
+          name: 'Sair',
+          icon: 'mdi-exit-to-app',
+          path: '/sair',
+        },
+        {
+          name: 'Home',
+          icon: 'home',
+          path: '/',
+        },
+        {
+          name: 'Gerenciar',
+          icon: 'settings',
+          path: '/gerenciar',
+        },
+        {
+          name: 'Sair',
+          icon: 'mdi-exit-to-app',
+          path: '/sair',
+        },
+        {
+          name: 'Home',
+          icon: 'home',
+          path: '/',
+        },
+        {
+          name: 'Gerenciar',
+          icon: 'settings',
+          path: '/gerenciar',
+        },
+        {
+          name: 'Sair',
+          icon: 'mdi-exit-to-app',
+          path: '/sair',
+        },
+      ],
     };
   },
-  mounted() {
-    setTimeout(() => {
-      this.exibir = false;
-    }, 2000);
+  setup() {
+    const store = geralStore();
+    const text = ref('');
+    return {
+      store,
+      text,
+    };
   },
 });
 </script>
 
 <style lang="scss">
+.shortcut_container {
+  overflow: auto;
+  max-height: 300px;
+}
 .inner_container {
   background: rgba(28, 33, 39, 0.63);
+  padding: 15px;
+}
+
+.menu-item {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .menu_windows {
   position: absolute;
-  max-height: 850px;
+  max-height: 50vh;
   min-height: 50vh;
   width: 80%;
   max-width: 600px;
@@ -81,6 +200,10 @@ export default defineComponent({
 .menu_windows.active {
   animation: 0.2s slideDown ease;
   /* animation-timing-function: cubic-bezier(0.3, 0.5, 0, 1); */
+}
+
+.search_container {
+  padding: 12px 0 12px 0;
 }
 
 @keyframes slideUp {

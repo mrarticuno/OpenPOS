@@ -11,5 +11,8 @@ export const geralStore = defineStore('geral', {
     toggleMenu() {
       this.showMenu = !this.showMenu;
     },
+    openWindow(url: string) {
+      window.open(url, '_blank');
+    },
   },
 });

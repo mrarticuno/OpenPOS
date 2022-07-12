@@ -120,7 +120,6 @@ html {
   display: flex;
   height: 100%;
   max-height: 740px;
-  max-width: 350px;
   flex-direction: column;
 }
 

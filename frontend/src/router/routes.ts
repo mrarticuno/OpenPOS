@@ -33,6 +33,17 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '/form',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'maker',
+        component: () => import('src/pages/form/FormMakerPage.vue'),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

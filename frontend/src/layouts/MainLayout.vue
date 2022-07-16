@@ -75,6 +75,6 @@ body {
   background-size: cover;
 }
 .menu-position {
-  z-index: 5;
+  z-index: 60001;
 }
 </style>

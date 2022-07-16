@@ -13,6 +13,9 @@ const inputs = {
 };
 
 const helper_texts = {
+  close_btn: 'Fechar',
+  reset_btn: 'Limpar campos',
+  save_btn: 'Salvar',
   search_placeholder: 'Digite sua pesquisa aqui',
   search_short_placeholder: 'Pesquisar',
   not_registered: 'Não tem conta?',

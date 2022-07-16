@@ -8,7 +8,7 @@ export interface IFormModel {
 export interface IFormItemModel {
   id: string;
   maxLength?: number;
-  columns?: number;
+  columns?: string;
   label: string;
   type: string;
   value: any;

@@ -1,0 +1,33 @@
+{
+  "title": "Produto",
+  "itens": [
+    {
+      "id": "",
+      "label": "Data de inclusao do pedido",
+      "type": "date",
+      "value": "",
+      "columns": "6"
+    },
+    {
+      "id": "",
+      "label": "Descrição",
+      "type": "text",
+      "value": "",
+      "columns": "12"
+    },
+    {
+      "id": "",
+      "label": "Preço",
+      "type": "textarea",
+      "value": "",
+      "columns": "6"
+    },
+    {
+      "id": "",
+      "label": "Imagem",
+      "type": "time",
+      "value": "",
+      "columns": "6"
+    }
+  ]
+}

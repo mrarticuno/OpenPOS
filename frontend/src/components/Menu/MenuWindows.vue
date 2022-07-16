@@ -67,81 +67,6 @@ export default defineComponent({
           icon: 'mdi-exit-to-app',
           path: '/sair',
         },
-        {
-          name: 'Home',
-          icon: 'home',
-          path: '/',
-        },
-        {
-          name: 'Gerenciar',
-          icon: 'settings',
-          path: '/gerenciar',
-        },
-        {
-          name: 'Sair',
-          icon: 'mdi-exit-to-app',
-          path: '/sair',
-        },
-        {
-          name: 'Home',
-          icon: 'home',
-          path: '/',
-        },
-        {
-          name: 'Gerenciar',
-          icon: 'settings',
-          path: '/gerenciar',
-        },
-        {
-          name: 'Sair',
-          icon: 'mdi-exit-to-app',
-          path: '/sair',
-        },
-        {
-          name: 'Home',
-          icon: 'home',
-          path: '/',
-        },
-        {
-          name: 'Gerenciar',
-          icon: 'settings',
-          path: '/gerenciar',
-        },
-        {
-          name: 'Sair',
-          icon: 'mdi-exit-to-app',
-          path: '/sair',
-        },
-        {
-          name: 'Home',
-          icon: 'home',
-          path: '/',
-        },
-        {
-          name: 'Gerenciar',
-          icon: 'settings',
-          path: '/gerenciar',
-        },
-        {
-          name: 'Sair',
-          icon: 'mdi-exit-to-app',
-          path: '/sair',
-        },
-        {
-          name: 'Home',
-          icon: 'home',
-          path: '/',
-        },
-        {
-          name: 'Gerenciar',
-          icon: 'settings',
-          path: '/gerenciar',
-        },
-        {
-          name: 'Sair',
-          icon: 'mdi-exit-to-app',
-          path: '/sair',
-        },
       ],
     };
   },
@@ -159,6 +84,7 @@ export default defineComponent({
 <style lang="scss">
 .shortcut_container {
   overflow: auto;
+  justify-content: space-between;
   max-height: 300px;
 }
 .inner_container {

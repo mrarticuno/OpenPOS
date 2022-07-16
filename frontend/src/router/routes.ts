@@ -38,9 +38,10 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path: '',
+        path: ':id',
+        props: true,
         name: 'maker',
-        component: () => import('src/pages/form/FormMakerPage.vue'),
+        component: () => import('src/pages/Form/GenericForm.vue'),
       },
     ],
   },

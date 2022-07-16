@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "First and only ERP - POS fully open source.",
   "productName": "Open POS",
-  "author": "Gabriel Lyra<gmlyra@live.com>",
+  "author": "Gabriel Lyra<mrarticuno@live.com>",
   "private": true,
   "scripts": {
+    "start": "quasar dev",
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0"

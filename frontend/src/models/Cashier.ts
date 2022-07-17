@@ -6,7 +6,7 @@ const ModelName = 'Cashier';
 const Connector = true ? MDC : LDC;
 
 export class Cashier extends Connector {
-  id: number;
+  id: string;
   open_date: Date;
   close_date: Date;
   closed: boolean;

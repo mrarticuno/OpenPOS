@@ -1,0 +1,67 @@
+{
+  "user": [
+    '{{repeat(10, 20)}}',
+    {
+      "id": "{{objectId()}}",
+      "name": "{{firstName()}} {{surname()}}",
+      "email": "{{email()}}",
+      "password": "{{objectId()}}",
+      "document": "{{integer(1, 999999999)}}",
+      "phone": "{{integer(1, 999999999)}}",
+      "company_id": "{{objectId()}}",
+      "address_id": "{{objectId()}}",
+      "role": "{{random('admin', 'user','manager')}}",
+      "confirmation_code": "{{objectId()}}",
+      "active": "{{random('true', 'false')}}",
+      "createdAt": "{{date(new Date(2014, 0, 1), new Date(), 'YYYY-MM-ddThh:mm:ss Z')}}",
+      "updatedAt": "{{date(new Date(2014, 0, 1), new Date(), 'YYYY-MM-ddThh:mm:ss Z')}}"
+    }
+  ],
+  "product": [
+    '{{repeat(20, 50)}}',
+    {
+      "id": "{{objectId()}}",
+      "name": "{{lorem(1, 'words')}}",
+      "description": "{{lorem(1, 'paragraphs')}}",
+      "price": "{{integer(1, 999999999)}}",
+      "price_on_weight": "{{random('true', 'false')}}",
+      "ean": [
+        "{{integer(1, 999999999)}}"
+      ],
+      "priority": "{{integer(1, 9)}}",
+      "active": "{{random('true', 'false')}}",
+      "favorite": "{{random('true', 'false')}}",
+      "code": "{{integer(1, 9999)}}",
+      "image": "http://placehold.it/32x32",
+      "category_id": "{{objectId()}}",
+      "createdAt": "{{date(new Date(2014, 0, 1), new Date(), 'YYYY-MM-ddThh:mm:ss Z')}}",
+      "updatedAt": "{{date(new Date(2014, 0, 1), new Date(), 'YYYY-MM-ddThh:mm:ss Z')}}"
+    }
+  ],
+  "payment_method": [
+    '{{repeat(4, 7)}}',
+    {
+      "id": "{{objectId()}}",
+      "name": "{{lorem(1, 'words')}}",
+      "update_cashier_value": "{{random('true', 'false')}}",
+      "active": "{{random('true', 'false')}}",
+      "createdAt": "{{date(new Date(2014, 0, 1), new Date(), 'YYYY-MM-ddThh:mm:ss Z')}}",
+      "updatedAt": "{{date(new Date(2014, 0, 1), new Date(), 'YYYY-MM-ddThh:mm:ss Z')}}"
+    }
+  ],
+  "customer": [
+    '{{repeat(50, 150)}}',
+    {
+      "id": "{{objectId()}}",
+      "name": "{{firstName()}} {{surname()}}",
+      "document": "{{integer(1, 999999999)}}",
+      "phone": "{{integer(1, 999999999)}}",
+      "email": "{{email()}}",
+      "address_id": "{{objectId()}}",
+      "company_id": "{{objectId()}}",
+      "company_name": "{{lorem(1, 'words')}}",
+      "createdAt": "{{date(new Date(2014, 0, 1), new Date(), 'YYYY-MM-ddThh:mm:ss Z')}}",
+      "updatedAt": "{{date(new Date(2014, 0, 1), new Date(), 'YYYY-MM-ddThh:mm:ss Z')}}"
+    }
+  ]
+}

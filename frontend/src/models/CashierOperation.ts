@@ -6,13 +6,13 @@ const ModelName = 'CashierOperation';
 const Connector = true ? MDC : LDC;
 
 export class CashierOperation extends Connector {
-  id: number;
+  id: string;
   operation_date: Date;
   description: string;
   amount: number;
   type: string;
   user_id: string;
-  cashier_id: number;
+  cashier_id: string;
   active: boolean;
   constructor(data: any) {
     super(ModelName);

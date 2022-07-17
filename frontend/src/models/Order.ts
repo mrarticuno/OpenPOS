@@ -8,7 +8,7 @@ const ModelName = 'Order';
 const Connector = true ? MDC : LDC;
 
 export class Order extends Connector {
-  id: number;
+  id: string;
   user_id: string;
   total: number;
   status: string;

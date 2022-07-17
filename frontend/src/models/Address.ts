@@ -6,7 +6,7 @@ const ModelName = 'Address';
 const Connector = true ? MDC : LDC;
 
 export class Address extends Connector {
-  id: number;
+  id: string;
   zipcode: string;
   address: string;
   number: string;

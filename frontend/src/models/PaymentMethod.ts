@@ -6,7 +6,7 @@ const ModelName = 'PaymentMethod';
 const Connector = true ? MDC : LDC;
 
 export class PaymentMethod extends Connector {
-  id: number;
+  id: string;
   name: string;
   update_cashier_value: boolean;
   active: boolean;

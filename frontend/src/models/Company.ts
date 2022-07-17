@@ -6,14 +6,14 @@ const ModelName = 'Company';
 const Connector = true ? MDC : LDC;
 
 export class Company extends Connector {
-  id: number;
+  id: string;
   name: string;
   corporate_name: string;
   registration_number: string;
   main: boolean;
   provider: boolean;
   active: boolean;
-  address_id: number;
+  address_id: string;
   constructor(data: any) {
     super(ModelName);
     this.id = data.id || 0;

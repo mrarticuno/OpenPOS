@@ -6,7 +6,7 @@ const ModelName = 'Sale';
 const Connector = true ? MDC : LDC;
 
 export class Sale extends Connector {
-  id: number;
+  id: string;
   description: string;
   open_date: Date;
   close_date: Date;
@@ -15,11 +15,11 @@ export class Sale extends Connector {
   itens: any[];
   payments: any[];
   total_amount: number;
-  amount_paid: number;
+  amount_paid: string;
   discount: number;
-  cashier_id: number;
+  cashier_id: string;
   user_id: string;
-  customer_id: number;
+  customer_id: string;
   active: boolean;
   constructor(data: any) {
     super(ModelName);

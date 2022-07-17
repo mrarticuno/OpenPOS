@@ -6,7 +6,7 @@ const ModelName = 'Product';
 const Connector = true ? MDC : LDC;
 
 export class Product extends Connector {
-  id: number;
+  id: string;
   name: string;
   description: string;
   price: number;

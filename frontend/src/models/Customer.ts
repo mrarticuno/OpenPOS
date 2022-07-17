@@ -6,13 +6,13 @@ const ModelName = 'Customer';
 const Connector = true ? MDC : LDC;
 
 export class Customer extends Connector {
-  id: number;
+  id: string;
   name: string;
   company_name: string;
-  document_number: string;
+  document: string;
   email: string;
   phone: string;
-  address_id: number;
+  address_id: string;
   company_id: string;
   active: boolean;
   constructor(data: any) {
@@ -20,7 +20,7 @@ export class Customer extends Connector {
     this.id = data.id || 0;
     this.name = data.name || '';
     this.company_name = data.company_name || '';
-    this.document_number = data.document_number || '';
+    this.document = data.document || '';
     this.email = data.email || '';
     this.phone = data.phone || '';
     this.active = data.active || true;

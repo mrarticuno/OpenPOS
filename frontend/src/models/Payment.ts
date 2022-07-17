@@ -6,7 +6,7 @@ const ModelName = 'Payment';
 const Connector = true ? MDC : LDC;
 
 export class Payment extends Connector {
-  id: number;
+  id: string;
   amount: number;
   payment_date: number;
   payment_method: string;

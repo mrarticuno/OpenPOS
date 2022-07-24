@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+	provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Telemetria {
+  id             Int       @id @default(autoincrement())
+  criticidade    Int       @default(0)
+  stack          String?
+  tempo_execucao Int       @default(0)
+  origem         String
+  input          String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @default(now()) @updatedAt
+}
+
+model Empresa {
+  id                Int                 @id @default(autoincrement())
+  guid              String              @default(uuid())
+  nome              String
+  cnpj              String              @unique
+  endereco          String?               
+  filial            Boolean             @default(false)
+  bloqueado         Boolean             @default(false)
+  ativo             Boolean             @default(true)
+  matriz_id         Int?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime?           @updatedAt
+  GrupoUsuario      GrupoUsuario[]
+  Usuario           Usuario[]
+  Permissao         Permissao[]
+  PermissaoEspecial PermissaoEspecial[]
+  Relatorio         Relatorio[]
+  Log               Log[]
+}
+
+model Recurso {
+  id                Int                 @id @default(autoincrement())
+  guid              String              @default(uuid())
+  nome              String
+  nivel_minimo      Int                 @default(0)
+  descricao         String?
+  ativo             Boolean             @default(true)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime?           @updatedAt
+  Permissao         Permissao[]
+  PermissaoEspecial PermissaoEspecial[]
+}
+
+model GrupoUsuario {
+  id         Int         @id @default(autoincrement())
+  guid       String      @default(uuid())
+  nome       String
+  descricao  String?
+  empresa    Empresa     @relation(fields: [empresa_id], references: [id])
+  empresa_id Int
+  ativo      Boolean     @default(true)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime?   @updatedAt
+  Usuario    Usuario[]
+  Permissao  Permissao[]
+}
+
+model Usuario {
+  id                Int                 @id @default(autoincrement())
+  guid              String              @default(uuid())
+  validacao         String              @default(uuid())
+  nome              String
+  email             String              @unique
+  senha             String
+  endereco          String?               
+  senhas_antigas    String?               
+  permissoes        String?               
+  grupoUsuario      GrupoUsuario?       @relation(fields: [grupoUsuario_id], references: [id])
+  grupoUsuario_id   Int?
+  empresa           Empresa             @relation(fields: [empresa_id], references: [id])
+  empresa_id        Int
+  bloqueado         Boolean             @default(false)
+  ativo             Boolean             @default(true)
+  admin             Boolean             @default(false)
+  alterar_senha     Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime?           @updatedAt
+  PermissaoEspecial PermissaoEspecial[]
+  Log               Log[]
+}
+
+model Log {
+  id         Int       @id @default(autoincrement())
+  dominio    String
+  usuario    Usuario   @relation(fields: [usuario_id], references: [id])
+  usuario_id Int
+  empresa    Empresa   @relation(fields: [empresa_id], references: [id])
+  empresa_id Int
+  antes      String?
+  depois     String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @default(now()) @updatedAt
+}
+
+model Permissao {
+  id              Int          @id @default(autoincrement())
+  guid            String       @default(uuid())
+  nivel           Int          @default(3)
+  ativo           Boolean      @default(true)
+  recurso         Recurso      @relation(fields: [recurso_id], references: [id])
+  recurso_id      Int
+  empresa         Empresa      @relation(fields: [empresa_id], references: [id])
+  empresa_id      Int
+  grupoUsuario    GrupoUsuario @relation(fields: [grupoUsuario_id], references: [id])
+  grupoUsuario_id Int
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime?    @updatedAt
+}
+
+model PermissaoEspecial {
+  id         Int       @id @default(autoincrement())
+  guid       String    @default(uuid())
+  nivel      Int       @default(3)
+  ativo      Boolean   @default(true)
+  recurso    Recurso   @relation(fields: [recurso_id], references: [id])
+  recurso_id Int
+  empresa    Empresa   @relation(fields: [empresa_id], references: [id])
+  empresa_id Int
+  usuario    Usuario   @relation(fields: [usuario_id], references: [id])
+  usuario_id Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+}
+
+model Modulo {
+  id        Int       @id @default(autoincrement())
+  guid      String    @default(uuid())
+  nome      String
+  descricao String?
+  ativo     Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+}
+
+model Relatorio {
+  id         Int       @id @default(autoincrement())
+  guid       String    @default(uuid())
+  nome       String
+  descricao  String?
+  arquivo    String
+  empresa    Empresa?  @relation(fields: [empresa_id], references: [id])
+  empresa_id Int?
+  ativo      Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+}

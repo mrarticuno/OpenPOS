@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+	provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Telemetria {
+  id             Int       @id @default(autoincrement())
+  criticidade    Int       @default(0)
+  stack          String?
+  tempo_execucao Int       @default(0)
+  origem         String
+  input          Json
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @default(now()) @updatedAt
+}
+
+model Empresa {
+  id                Int                 @id @default(autoincrement())
+  guid              String              @default(uuid()) @db.VarChar(36)
+  nome              String              @db.VarChar(255)
+  cnpj              String              @unique @db.VarChar(25)
+  endereco          Json?               @db.Json
+  filial            Boolean             @default(false)
+  bloqueado         Boolean             @default(false)
+  ativo             Boolean             @default(true)
+  matriz_id         Int?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime?           @updatedAt
+  GrupoUsuario      GrupoUsuario[]
+  Usuario           Usuario[]
+  Permissao         Permissao[]
+  PermissaoEspecial PermissaoEspecial[]
+  Relatorio         Relatorio[]
+  Log               Log[]
+}
+
+model Recurso {
+  id                Int                 @id @default(autoincrement())
+  guid              String              @default(uuid()) @db.VarChar(36)
+  nome              String              @db.VarChar(255)
+  nivel_minimo      Int                 @default(0)
+  descricao         String?             @db.VarChar(255)
+  ativo             Boolean             @default(true)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime?           @updatedAt
+  Permissao         Permissao[]
+  PermissaoEspecial PermissaoEspecial[]
+}
+
+model GrupoUsuario {
+  id         Int         @id @default(autoincrement())
+  guid       String      @default(uuid()) @db.VarChar(36)
+  nome       String      @db.VarChar(255)
+  descricao  String?     @db.VarChar(255)
+  empresa    Empresa     @relation(fields: [empresa_id], references: [id])
+  empresa_id Int
+  ativo      Boolean     @default(true)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime?   @updatedAt
+  Usuario    Usuario[]
+  Permissao  Permissao[]
+}
+
+model Usuario {
+  id                Int                 @id @default(autoincrement())
+  guid              String              @default(uuid()) @db.VarChar(36)
+  validacao         String              @default(uuid()) @db.VarChar(36)
+  nome              String              @db.VarChar(255)
+  email             String              @unique @db.VarChar(255)
+  senha             String              @db.VarChar(255)
+  endereco          Json?               @db.Json
+  senhas_antigas    Json?               @db.Json
+  permissoes        Json?               @db.Json
+  grupoUsuario      GrupoUsuario?       @relation(fields: [grupoUsuario_id], references: [id])
+  grupoUsuario_id   Int?
+  empresa           Empresa             @relation(fields: [empresa_id], references: [id])
+  empresa_id        Int
+  bloqueado         Boolean             @default(false)
+  ativo             Boolean             @default(true)
+  admin             Boolean             @default(false)
+  alterar_senha     Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime?           @updatedAt
+  PermissaoEspecial PermissaoEspecial[]
+  Log               Log[]
+}
+
+model Log {
+  id         Int       @id @default(autoincrement())
+  dominio    String    @db.VarChar(30)
+  usuario    Usuario   @relation(fields: [usuario_id], references: [id])
+  usuario_id Int
+  empresa    Empresa   @relation(fields: [empresa_id], references: [id])
+  empresa_id Int
+  antes      Json?
+  depois     Json?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @default(now()) @updatedAt
+}
+
+model Permissao {
+  id              Int          @id @default(autoincrement())
+  guid            String       @default(uuid()) @db.VarChar(36)
+  nivel           Int          @default(3)
+  ativo           Boolean      @default(true)
+  recurso         Recurso      @relation(fields: [recurso_id], references: [id])
+  recurso_id      Int
+  empresa         Empresa      @relation(fields: [empresa_id], references: [id])
+  empresa_id      Int
+  grupoUsuario    GrupoUsuario @relation(fields: [grupoUsuario_id], references: [id])
+  grupoUsuario_id Int
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime?    @updatedAt
+}
+
+model PermissaoEspecial {
+  id         Int       @id @default(autoincrement())
+  guid       String    @default(uuid()) @db.VarChar(36)
+  nivel      Int       @default(3)
+  ativo      Boolean   @default(true)
+  recurso    Recurso   @relation(fields: [recurso_id], references: [id])
+  recurso_id Int
+  empresa    Empresa   @relation(fields: [empresa_id], references: [id])
+  empresa_id Int
+  usuario    Usuario   @relation(fields: [usuario_id], references: [id])
+  usuario_id Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+}
+
+model Modulo {
+  id        Int       @id @default(autoincrement())
+  guid      String    @default(uuid()) @db.VarChar(36)
+  nome      String    @db.VarChar(255)
+  descricao String?   @db.VarChar(255)
+  ativo     Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+}
+
+model Relatorio {
+  id         Int       @id @default(autoincrement())
+  guid       String    @default(uuid()) @db.VarChar(36)
+  nome       String    @db.VarChar(255)
+  descricao  String?   @db.VarChar(255)
+  arquivo    String    @db.VarChar(255)
+  empresa    Empresa?  @relation(fields: [empresa_id], references: [id])
+  empresa_id Int?
+  ativo      Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+}

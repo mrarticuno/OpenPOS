@@ -1,0 +1,35 @@
+org: gabrielmlyra
+app: galactus
+service: api
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  region: sa-east-1
+  runtime: nodejs14.x
+  lambdaHashingVersion: '20201221'
+  stage: dev
+  memorySize: 256
+  timeout: 6
+
+package:
+  patterns:
+    - '!tmp/**'
+    - '!.git/**'
+    - '!migrations/**'
+    - '!.eslintrc.js'
+    - '!.gitignore'
+    - '!.prettierrc.json'
+    - '!LICENSE'
+    - '!README.md'
+    - '!knexfile.js'
+  
+
+functions:
+  api:
+    handler: handler.run
+    events:
+      - httpApi: '*'
+
+plugins:
+  - serverless-offline

@@ -5,7 +5,7 @@ import { User } from '../models/User';
 export const userStore = defineStore('user', {
   state: () => ({
     user: new User({}) as User,
-    token: 'e sempre',
+    token: '',
   }),
   getters: {
     getUser: (state) => state.user,

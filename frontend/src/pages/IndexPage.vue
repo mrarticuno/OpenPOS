@@ -14,7 +14,7 @@ export default defineComponent({
   name: 'IndexPage',
   components: { DesktopMenu },
   mounted() {
-    updateToken(`${this.store.getToken}`);
+    // updateToken(`${this.store.getToken}`);
   },
   setup() {
     const store = userStore();

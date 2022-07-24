@@ -1,7 +1,16 @@
 import { boot } from 'quasar/wrappers';
+import { userStore } from 'src/stores/user-store';
 
 export default boot(({ router, store }) => {
   router.beforeEach((to, from, next) => {
-    // Now you need to add your authentication logic here, like calling an API endpoint
+    if (to.name === 'login') {
+      next();
+    }
+    const state = userStore(store);
+    if (state.token.length > 0) {
+      next();
+    } else {
+      next('/login');
+    }
   });
 });

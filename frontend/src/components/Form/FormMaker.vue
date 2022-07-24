@@ -14,6 +14,33 @@
                 : `col`
             "
           >
+            <div v-if="field.type === 'multitext'">
+              <q-input
+                class="q-pa-sm"
+                outlined
+                type="text"
+                v-model="multitext"
+                :clearable="field.clearable"
+                :placeholder="field.placeholder"
+                :label="$t(field.label)"
+                :mask="field.mask"
+                fill-mask
+                :disable="field.disabled"
+                :hidden="field.hidden"
+                @click="field.onClick"
+                v-on:keyup.enter="replaceMultiText(index)"
+              ></q-input>
+              <q-chip
+                v-for="(item, id) in field.value"
+                :key="id"
+                removable
+                color="primary"
+                @remove="remove(id, index)"
+                text-color="white"
+              >
+                {{ item }}
+              </q-chip>
+            </div>
             <q-input
               v-if="field.type === 'text'"
               class="q-pa-sm"
@@ -22,9 +49,10 @@
               v-model="field.value"
               :clearable="field.clearable"
               :placeholder="field.placeholder"
-              :label="field.label"
+              :label="$t(field.label)"
               :mask="field.mask"
-              fill-mask
+              :fill-mask="field.fill_mask"
+              :reverse-fill-mask="field.reverse_fill_mask"
               :disable="field.disabled"
               :hidden="field.hidden"
               @click="field.onClick"
@@ -37,7 +65,7 @@
               v-model="field.value"
               :clearable="field.clearable"
               :placeholder="field.placeholder"
-              :label="field.label"
+              :label="$t(field.label)"
               :disable="field.disabled"
               :hidden="field.hidden"
               @click="field.onClick"
@@ -58,7 +86,7 @@
               :type="field.type"
               :clearable="field.clearable"
               :placeholder="field.placeholder"
-              :label="field.label"
+              :label="$t(field.label)"
               :disable="field.disabled"
               :hidden="field.hidden"
               @click="field.onClick"
@@ -73,7 +101,7 @@
               :type="field.type"
               :clearable="field.clearable"
               :placeholder="field.placeholder"
-              :label="field.label"
+              :label="$t(field.label)"
               :disable="field.disabled"
               :hidden="field.hidden"
               @click="field.onClick"
@@ -88,18 +116,28 @@
               :type="field.type"
               :clearable="field.clearable"
               :placeholder="field.placeholder"
-              :label="field.label"
+              :label="$t(field.label)"
               :disable="field.disabled"
               :hidden="field.hidden"
               @click="field.onClick"
             >
             </q-input>
+            <q-toggle
+              v-if="field.type === 'toggle'"
+              class="q-pa-sm"
+              v-model="field.value"
+              :type="field.type"
+              :label="$t(field.label)"
+              :disable="field.disabled"
+              :hidden="field.hidden"
+            >
+            </q-toggle>
             <q-uploader
               v-if="field.type === 'file'"
               class="q-pa-sm"
               outlined
               :placeholder="field.placeholder"
-              :label="field.label"
+              :label="$t(field.label)"
               :disable="field.disabled"
               :hidden="field.hidden"
               @added="onAdded($event, index)"
@@ -128,7 +166,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { IFormModel } from './models';
 
 export default defineComponent({
@@ -153,9 +191,23 @@ export default defineComponent({
     onReset() {
       this.$emit('reset');
     },
+    remove(id: number, index: number) {
+      const nArray = this.form.itens[index].value;
+      nArray.splice(id, 1);
+      this.$emit('update-value', nArray, index);
+    },
+    replaceMultiText(index: number) {
+      const nArray = [...this.form.itens[index].value];
+      nArray.push(this.multitext);
+      this.$emit('update-value', nArray, index);
+      this.multitext = '';
+    },
   },
   setup() {
-    return {};
+    let multitext = ref('');
+    return {
+      multitext,
+    };
   },
 });
 </script>

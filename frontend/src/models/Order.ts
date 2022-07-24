@@ -19,7 +19,7 @@ export class Order extends Connector {
   company_id: string;
   constructor(data: any) {
     super(ModelName);
-    this.id = data.id || 0;
+    this.id = data.id || '';
     this.user_id = data.user_id || 0;
     this.total = data.total || 0;
     this.status = data.status || '';

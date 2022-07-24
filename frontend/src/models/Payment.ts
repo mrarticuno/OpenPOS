@@ -14,7 +14,7 @@ export class Payment extends Connector {
   active: boolean;
   constructor(data: any) {
     super(ModelName);
-    this.id = data.id || 0;
+    this.id = data.id || '';
     this.amount = data.amount || 0;
     this.payment_date = data.payment_date || new Date().getTime();
     this.payment_method = data.payment_method || '';

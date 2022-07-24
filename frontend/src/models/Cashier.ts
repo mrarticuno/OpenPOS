@@ -17,7 +17,7 @@ export class Cashier extends Connector {
   active: boolean;
   constructor(data: any) {
     super(ModelName);
-    this.id = data.id || 0;
+    this.id = data.id || '';
     this.open_date = data.open_date || new Date().getTime();
     this.close_date = data.close_date || '';
     this.closed = data.closed || false;

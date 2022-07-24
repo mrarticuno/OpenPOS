@@ -2,30 +2,69 @@
   "title": "Produto",
   "itens": [
     {
-      "id": "",
-      "label": "Data de inclusao do pedido",
-      "type": "date",
+      "id": "name",
+      "label": "form_name",
+      "type": "text",
       "value": "",
       "columns": "6"
     },
     {
-      "id": "",
-      "label": "Descrição",
-      "type": "text",
+      "id": "description",
+      "label": "form_description",
+      "type": "textarea",
       "value": "",
       "columns": "12"
     },
     {
-      "id": "",
-      "label": "Preço",
-      "type": "textarea",
+      "id": "price",
+      "label": "form_price",
+      "type": "text",
+      "fill_mask": "0",
+      "reverse_fill_mask": true,
+      "mask": "#,##",
+      "value": null,
+      "columns": "6"
+    },
+    {
+      "id": "code",
+      "label": "form_code",
+      "type": "text",
       "value": "",
       "columns": "6"
     },
     {
-      "id": "",
-      "label": "Imagem",
-      "type": "time",
+      "id": "ean",
+      "label": "form_ean",
+      "type": "multitext",
+      "value": [],
+      "columns": "12"
+    },
+    {
+      "id": "priority",
+      "label": "form_priority",
+      "type": "text",
+      "value": "",
+      "columns": "6",
+      "mask": "##"
+    },
+    {
+      "id": "price_on_weight",
+      "label": "form_price_on_weight",
+      "type": "toggle",
+      "value": false,
+      "columns": "3"
+    },
+    {
+      "id": "active",
+      "label": "form_active",
+      "type": "toggle",
+      "value": true,
+      "columns": "3"
+    },
+    {
+      "id": "image",
+      "label": "form_image",
+      "type": "file",
       "value": "",
       "columns": "6"
     }

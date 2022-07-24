@@ -16,7 +16,7 @@ export class Company extends Connector {
   address_id: string;
   constructor(data: any) {
     super(ModelName);
-    this.id = data.id || 0;
+    this.id = data.id || '';
     this.name = data.name || '';
     this.corporate_name = data.corporate_name || '';
     this.registration_number = data.registration_number || '';

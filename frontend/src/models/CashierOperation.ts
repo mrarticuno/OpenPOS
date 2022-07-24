@@ -1,11 +1,11 @@
 import { ModelDatabaseConnector as MDC } from './ModelDatabaseConnector';
 import { LocalDatabaseConnector as LDC } from './LocalDatabaseConnector';
 
-const ModelName = 'CashierOperation';
+const ModelName = 'Cashieroperation';
 
 const Connector = true ? MDC : LDC;
 
-export class CashierOperation extends Connector {
+export class Cashieroperation extends Connector {
   id: string;
   operation_date: Date;
   description: string;
@@ -16,7 +16,7 @@ export class CashierOperation extends Connector {
   active: boolean;
   constructor(data: any) {
     super(ModelName);
-    this.id = data.id || 0;
+    this.id = data.id || '';
     this.operation_date = data.operation_date || new Date().getTime();
     this.description = data.description || '';
     this.amount = data.amount || 0;

@@ -21,7 +21,7 @@ export class User extends Connector {
   updated_at: string;
   constructor(data: any) {
     super(ModelName);
-    this.id = data.id || 0;
+    this.id = data.id || '';
     this.name = data.name || '';
     this.email = data.email || '';
     this.role = data.role || '';

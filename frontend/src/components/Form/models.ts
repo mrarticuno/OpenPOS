@@ -16,6 +16,8 @@ export interface IFormItemModel {
   options?: any[];
   validators?: any[];
   error?: string;
+  fill_mask?: string;
+  reverse_fill_mask?: boolean;
   required?: boolean;
   autogrow?: boolean;
   disabled?: boolean;

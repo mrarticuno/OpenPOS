@@ -15,6 +15,13 @@ export const formStore = defineStore('form', {
   getters: {
     isDialogOpen: (state) => state.showDialog,
     getForm: (state) => state.form,
+    getObject: (state) => {
+      let obj = {};
+      state.form.itens.forEach((item) => {
+        obj = { ...obj, [item.id]: item.value };
+      });
+      return obj;
+    },
   },
   actions: {
     resetForm() {
@@ -32,8 +39,8 @@ export const formStore = defineStore('form', {
         this.showDialog = !this.showDialog;
       }
     },
-    setImageItem(index: number, image: string) {
-      this.form.itens[index].value = image;
+    setItem(index: number, value: any) {
+      this.form.itens[index].value = value;
     },
   },
 });

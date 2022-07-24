@@ -32,7 +32,9 @@
 </template>
 
 <script lang="ts">
-import * as Objects from 'src/data/forms/index';
+import _ from 'lodash';
+import * as Models from 'src/models';
+import * as Objects from 'src/data/forms';
 import FormMaker from 'src/components/Form/FormMaker.vue';
 import DesktopMenu from 'src/components/Menu/DesktopMenu.vue';
 import { formStore } from 'src/stores/form-store';
@@ -49,10 +51,12 @@ export default defineComponent({
   },
   methods: {
     onValueUpdate(value: string, index: number) {
-      this.store.setImageItem(index, value);
+      this.store.setItem(index, value);
     },
     onSave() {
-      console.log('Salvar');
+      const Model = _.get(Models.default, _.upperFirst(this.id));
+      const dataObj = new Model(this.store.getObject);
+      dataObj.createOrUpdate(dataObj, dataObj.id);
     },
     onReset() {
       this.store.resetForm();

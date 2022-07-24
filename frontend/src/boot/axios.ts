@@ -21,6 +21,10 @@ const api = axios.create({
     : 'https://cooperanova-stage.herokuapp.com/',
 });
 
+const updateToken = (token: string) => {
+  api.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
@@ -33,4 +37,4 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
 });
 
-export { api };
+export { api, axios, updateToken };

@@ -17,7 +17,7 @@ export class Customer extends Connector {
   active: boolean;
   constructor(data: any) {
     super(ModelName);
-    this.id = data.id || 0;
+    this.id = data.id || '';
     this.name = data.name || '';
     this.company_name = data.company_name || '';
     this.document = data.document || '';

@@ -18,7 +18,7 @@ export class Address extends Connector {
   country: string;
   constructor(data: any) {
     super(ModelName);
-    this.id = data.id || 0;
+    this.id = data.id || '';
     this.zipcode = data.zipcode || '';
     this.address = data.address || '';
     this.number = data.number || '';

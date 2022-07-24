@@ -23,7 +23,7 @@ export class Product extends Connector {
   company_id: string;
   constructor(data: any) {
     super(ModelName);
-    this.id = data.id || 0;
+    this.id = data.id || '';
     this.name = data.name || '';
     this.description = data.description || '';
     this.code = data.code || '';

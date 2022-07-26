@@ -1,35 +1,35 @@
 org: gabrielmlyra
 app: galactus
 service: api
-frameworkVersion: '2'
+frameworkVersion: "3"
 
 provider:
   name: aws
   region: sa-east-1
   runtime: nodejs14.x
-  lambdaHashingVersion: '20201221'
   stage: dev
   memorySize: 256
   timeout: 6
 
 package:
   patterns:
-    - '!tmp/**'
-    - '!.git/**'
-    - '!migrations/**'
-    - '!.eslintrc.js'
-    - '!.gitignore'
-    - '!.prettierrc.json'
-    - '!LICENSE'
-    - '!README.md'
-    - '!knexfile.js'
-  
+    - "!tmp/**"
+    - "!.git/**"
+    - "!migrations/**"
+    - "!.eslintrc.js"
+    - "!.gitignore"
+    - "!.prettierrc.json"
+    - "!LICENSE"
+    - "!README.md"
+    - "!knexfile.js"
 
 functions:
   api:
+    environment:
+      SECRET: "0129OWEIDKFJVU7F8RE93OK4JHT" ## Secret key for JWT (change before deploying)
     handler: handler.run
     events:
-      - httpApi: '*'
+      - httpApi: "*"
 
 plugins:
   - serverless-offline

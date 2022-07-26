@@ -10,7 +10,13 @@
       <q-card class="bg-white text-black">
         <q-bar>
           <q-space />
-          <q-btn dense flat icon="close" v-close-popup>
+          <q-btn
+            dense
+            flat
+            icon="close"
+            v-close-popup
+            @click="store.toggleWindow()"
+          >
             <q-tooltip class="bg-white text-primary">{{
               $t('close_btn')
             }}</q-tooltip>

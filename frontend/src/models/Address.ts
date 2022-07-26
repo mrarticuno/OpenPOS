@@ -1,12 +1,4 @@
-import { ModelDatabaseConnector as MDC } from './ModelDatabaseConnector';
-import { LocalDatabaseConnector as LDC } from './LocalDatabaseConnector';
-
-const ModelName = 'Address';
-
-const Connector = true ? MDC : LDC;
-
-export class Address extends Connector {
-  id: string;
+export class Address {
   zipcode: string;
   address: string;
   number: string;
@@ -17,8 +9,6 @@ export class Address extends Connector {
   state: string;
   country: string;
   constructor(data: any) {
-    super(ModelName);
-    this.id = data.id || '';
     this.zipcode = data.zipcode || '';
     this.address = data.address || '';
     this.number = data.number || '';

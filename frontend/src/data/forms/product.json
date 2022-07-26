@@ -1,12 +1,12 @@
 {
-  "title": "Produto",
+  "title": "Cadastro de Produtos",
   "itens": [
     {
       "id": "name",
       "label": "form_name",
       "type": "text",
       "value": "",
-      "columns": "6"
+      "columns": "8"
     },
     {
       "id": "description",
@@ -23,21 +23,21 @@
       "reverse_fill_mask": true,
       "mask": "#,##",
       "value": null,
-      "columns": "6"
+      "columns": "4"
     },
     {
       "id": "code",
       "label": "form_code",
       "type": "text",
       "value": "",
-      "columns": "6"
+      "columns": "4"
     },
     {
       "id": "ean",
       "label": "form_ean",
       "type": "multitext",
       "value": [],
-      "columns": "12"
+      "columns": "4"
     },
     {
       "id": "priority",

@@ -15,5 +15,8 @@ export const userStore = defineStore('user', {
     getById(id: string) {
       this.user = new User(this.user.get(id));
     },
+    setToken(token: string) {
+      this.token = token;
+    },
   },
 });

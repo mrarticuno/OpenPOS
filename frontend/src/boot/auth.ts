@@ -5,6 +5,7 @@ export default boot(({ router, store }) => {
   router.beforeEach((to, from, next) => {
     if (to.name === 'login') {
       next();
+      return;
     }
     const state = userStore(store);
     if (state.token.length > 0) {

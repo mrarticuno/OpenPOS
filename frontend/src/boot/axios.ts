@@ -18,7 +18,7 @@ const isLocalhost = window.location.href.includes('localhost');
 const api = axios.create({
   baseURL: isLocalhost
     ? 'http://localhost:3000/'
-    : 'https://cooperanova-stage.herokuapp.com/',
+    : 'https://w8fj6ba8s6.execute-api.sa-east-1.amazonaws.com/',
 });
 
 const updateToken = (token: string) => {

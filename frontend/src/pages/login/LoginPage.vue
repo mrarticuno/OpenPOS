@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { userStore } from 'src/stores/user-store';
 export default {
   name: 'LoginPage',
   data() {
@@ -72,23 +73,17 @@ export default {
       password: '',
     };
   },
-  watch: {},
   methods: {
     login() {
-      this.LOGIN({
-        email: this.email,
-        senha: this.password,
-      });
+      this.store.setToken('hausuhdahusdhusa');
+      this.$router.push({ name: 'index' });
     },
   },
-  mounted() {
-    if (!this.isLoggedIn) {
-      let token = localStorage.getItem('token');
-      if (token) {
-        // this.SETTOKEN(token)
-        // this.VALIDATE_TOKEN()
-      }
-    }
+  setup() {
+    const store = userStore();
+    return {
+      store,
+    };
   },
 };
 </script>

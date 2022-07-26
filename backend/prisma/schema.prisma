@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-	provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
@@ -11,150 +11,298 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Telemetria {
-  id             Int       @id @default(autoincrement())
-  criticidade    Int       @default(0)
+model Telemetry {
+  id             String    @id @default(uuid()) @db.VarChar(36)
+  criticality    Int       @default(0)
   stack          String?
-  tempo_execucao Int       @default(0)
-  origem         String
+  execution_time Int       @default(0)
+  origin         String
   input          Json
   createdAt      DateTime  @default(now())
   updatedAt      DateTime? @default(now()) @updatedAt
 }
 
-model Empresa {
-  id                Int                 @id @default(autoincrement())
-  guid              String              @default(uuid()) @db.VarChar(36)
-  nome              String              @db.VarChar(255)
-  cnpj              String              @unique @db.VarChar(25)
-  endereco          Json?               @db.Json
-  filial            Boolean             @default(false)
-  bloqueado         Boolean             @default(false)
-  ativo             Boolean             @default(true)
-  matriz_id         Int?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime?           @updatedAt
-  GrupoUsuario      GrupoUsuario[]
-  Usuario           Usuario[]
-  Permissao         Permissao[]
-  PermissaoEspecial PermissaoEspecial[]
-  Relatorio         Relatorio[]
-  Log               Log[]
+model Company {
+  id                  String              @id @default(uuid()) @db.VarChar(36)
+  name                String              @db.VarChar(255)
+  corporate_name      String              @db.VarChar(255)
+  registration_number String              @unique @db.VarChar(25)
+  address             Json?               @db.Json
+  main                Boolean             @default(false)
+  blocked             Boolean             @default(false)
+  active              Boolean             @default(true)
+  main_id             String?
+  provider            Boolean             @default(false)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime?           @updatedAt
+  UserGroup           Usergroup[]
+  User                User[]
+  Permission          Permission[]
+  SpecialPermission   Specialpermission[]
+  Report              Report[]
+  Log                 Log[]
+  Cashier             Cashier[]
+  Customer            Customer[]
+  Product             Product[]
+  Order               Order[]
+  ProductCategory     Productcategory[]
+  Sale                Sale[]
+  Paymentmethod       Paymentmethod[]
+  Payment             Payment[]
 }
 
-model Recurso {
-  id                Int                 @id @default(autoincrement())
-  guid              String              @default(uuid()) @db.VarChar(36)
-  nome              String              @db.VarChar(255)
-  nivel_minimo      Int                 @default(0)
-  descricao         String?             @db.VarChar(255)
-  ativo             Boolean             @default(true)
+model Resource {
+  id                String              @id @default(uuid()) @db.VarChar(36)
+  name              String              @db.VarChar(255)
+  min_level         Int                 @default(0)
+  description       String?             @db.VarChar(255)
+  active            Boolean             @default(true)
   createdAt         DateTime            @default(now())
   updatedAt         DateTime?           @updatedAt
-  Permissao         Permissao[]
-  PermissaoEspecial PermissaoEspecial[]
+  Permission        Permission[]
+  SpecialPermission Specialpermission[]
 }
 
-model GrupoUsuario {
-  id         Int         @id @default(autoincrement())
-  guid       String      @default(uuid()) @db.VarChar(36)
-  nome       String      @db.VarChar(255)
-  descricao  String?     @db.VarChar(255)
-  empresa    Empresa     @relation(fields: [empresa_id], references: [id])
-  empresa_id Int
-  ativo      Boolean     @default(true)
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime?   @updatedAt
-  Usuario    Usuario[]
-  Permissao  Permissao[]
+model Usergroup {
+  id          String       @id @default(uuid()) @db.VarChar(36)
+  name        String       @db.VarChar(255)
+  description String?      @db.VarChar(255)
+  company     Company      @relation(fields: [company_id], references: [id])
+  company_id  String
+  active      Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?    @updatedAt
+  User        User[]
+  Permission  Permission[]
 }
 
-model Usuario {
-  id                Int                 @id @default(autoincrement())
-  guid              String              @default(uuid()) @db.VarChar(36)
-  validacao         String              @default(uuid()) @db.VarChar(36)
-  nome              String              @db.VarChar(255)
-  email             String              @unique @db.VarChar(255)
-  senha             String              @db.VarChar(255)
-  endereco          Json?               @db.Json
-  senhas_antigas    Json?               @db.Json
-  permissoes        Json?               @db.Json
-  grupoUsuario      GrupoUsuario?       @relation(fields: [grupoUsuario_id], references: [id])
-  grupoUsuario_id   Int?
-  empresa           Empresa             @relation(fields: [empresa_id], references: [id])
-  empresa_id        Int
-  bloqueado         Boolean             @default(false)
-  ativo             Boolean             @default(true)
-  admin             Boolean             @default(false)
-  alterar_senha     Boolean             @default(false)
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime?           @updatedAt
-  PermissaoEspecial PermissaoEspecial[]
-  Log               Log[]
+model User {
+  id                 String              @id @default(uuid()) @db.VarChar(36)
+  validation         String              @default(uuid()) @db.VarChar(36)
+  name               String              @db.VarChar(255)
+  email              String              @unique @db.VarChar(255)
+  password           String              @db.VarChar(255)
+  address            Json?               @db.Json
+  previous_passwords Json?               @db.Json
+  permissions        Json?               @db.Json
+  userGroup          Usergroup?          @relation(fields: [userGroup_id], references: [id])
+  userGroup_id       String?
+  company            Company             @relation(fields: [company_id], references: [id])
+  company_id         String
+  blocked            Boolean             @default(false)
+  active             Boolean             @default(true)
+  admin              Boolean             @default(false)
+  change_pass        Boolean             @default(false)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime?           @updatedAt
+  SpecialPermission  Specialpermission[]
+  Log                Log[]
+  Cashier            Cashier[]
+  CashierOperation   Cashieroperation[]
+  Order              Order[]
+  Sale               Sale[]
 }
 
 model Log {
-  id         Int       @id @default(autoincrement())
+  id         String    @id @default(uuid()) @db.VarChar(36)
   dominio    String    @db.VarChar(30)
-  usuario    Usuario   @relation(fields: [usuario_id], references: [id])
-  usuario_id Int
-  empresa    Empresa   @relation(fields: [empresa_id], references: [id])
-  empresa_id Int
-  antes      Json?
-  depois     Json?
+  user       User      @relation(fields: [user_id], references: [id])
+  user_id    String
+  company    Company   @relation(fields: [company_id], references: [id])
+  company_id String
+  before     Json?
+  after      Json?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime? @default(now()) @updatedAt
 }
 
-model Permissao {
-  id              Int          @id @default(autoincrement())
-  guid            String       @default(uuid()) @db.VarChar(36)
-  nivel           Int          @default(3)
-  ativo           Boolean      @default(true)
-  recurso         Recurso      @relation(fields: [recurso_id], references: [id])
-  recurso_id      Int
-  empresa         Empresa      @relation(fields: [empresa_id], references: [id])
-  empresa_id      Int
-  grupoUsuario    GrupoUsuario @relation(fields: [grupoUsuario_id], references: [id])
-  grupoUsuario_id Int
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime?    @updatedAt
+model Permission {
+  id           String    @id @default(uuid()) @db.VarChar(36)
+  level        Int       @default(3)
+  active       Boolean   @default(true)
+  resource     Resource  @relation(fields: [resource_id], references: [id])
+  resource_id  String
+  company      Company   @relation(fields: [company_id], references: [id])
+  company_id   String
+  userGroup    Usergroup @relation(fields: [userGroup_id], references: [id])
+  userGroup_id String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
 }
 
-model PermissaoEspecial {
-  id         Int       @id @default(autoincrement())
-  guid       String    @default(uuid()) @db.VarChar(36)
-  nivel      Int       @default(3)
-  ativo      Boolean   @default(true)
-  recurso    Recurso   @relation(fields: [recurso_id], references: [id])
-  recurso_id Int
-  empresa    Empresa   @relation(fields: [empresa_id], references: [id])
-  empresa_id Int
-  usuario    Usuario   @relation(fields: [usuario_id], references: [id])
-  usuario_id Int
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime? @updatedAt
+model Specialpermission {
+  id          String    @id @default(uuid()) @db.VarChar(36)
+  level       Int       @default(3)
+  active      Boolean   @default(true)
+  resource    Resource  @relation(fields: [resource_id], references: [id])
+  resource_id String
+  company     Company   @relation(fields: [company_id], references: [id])
+  company_id  String
+  user        User      @relation(fields: [user_id], references: [id])
+  user_id     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
 }
 
-model Modulo {
-  id        Int       @id @default(autoincrement())
-  guid      String    @default(uuid()) @db.VarChar(36)
-  nome      String    @db.VarChar(255)
-  descricao String?   @db.VarChar(255)
-  ativo     Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+model Module {
+  id          String    @id @default(uuid()) @db.VarChar(36)
+  name        String    @db.VarChar(255)
+  description String?   @db.VarChar(255)
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
 }
 
-model Relatorio {
-  id         Int       @id @default(autoincrement())
-  guid       String    @default(uuid()) @db.VarChar(36)
-  nome       String    @db.VarChar(255)
-  descricao  String?   @db.VarChar(255)
-  arquivo    String    @db.VarChar(255)
-  empresa    Empresa?  @relation(fields: [empresa_id], references: [id])
-  empresa_id Int?
-  ativo      Boolean   @default(true)
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime? @updatedAt
+model Report {
+  id          String    @id @default(uuid()) @db.VarChar(36)
+  name        String    @db.VarChar(255)
+  description String?   @db.VarChar(255)
+  file        String    @db.Text
+  company     Company?  @relation(fields: [company_id], references: [id])
+  company_id  String?
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+}
+
+model Cashier {
+  id               String             @id @default(uuid()) @db.VarChar(36)
+  name             String             @db.VarChar(255)
+  description      String?            @db.VarChar(255)
+  open_date        DateTime           @default(now())
+  close_date       DateTime?
+  closed           Boolean            @default(false)
+  opening_value    BigInt             @default(0)
+  closing_value    BigInt             @default(0)
+  user             User               @relation(fields: [user_id], references: [id])
+  user_id          String
+  company          Company            @relation(fields: [company_id], references: [id])
+  company_id       String
+  active           Boolean            @default(true)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime?          @updatedAt
+  CashierOperation Cashieroperation[]
+
+}
+
+model Cashieroperation {
+  id             String    @id @default(uuid()) @db.VarChar(36)
+  description    String    @db.VarChar(255)
+  amount         BigInt    @default(0)
+  type           String    @db.VarChar(255)
+  operation_date DateTime  @default(now())
+  active         Boolean   @default(true)
+  cashier        Cashier   @relation(fields: [cashier_id], references: [id])
+  cashier_id     String
+  user           User      @relation(fields: [user_id], references: [id])
+  user_id        String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
+}
+
+model Customer {
+  id           String    @id @default(uuid()) @db.VarChar(36)
+  name         String    @db.VarChar(255)
+  description  String?   @db.VarChar(255)
+  company_name String    @db.VarChar(255)
+  document     String    @db.VarChar(255)
+  email        String    @db.VarChar(255)
+  phone        String    @db.VarChar(255)
+  address      Json?     @db.Json
+  company      Company   @relation(fields: [company_id], references: [id])
+  company_id   String
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
+  Order        Order[]
+  Sale         Sale[]
+}
+
+model Productcategory {
+  id          String    @id @default(uuid()) @db.VarChar(36)
+  name        String    @db.VarChar(255)
+  description String?   @db.VarChar(255)
+  company     Company   @relation(fields: [company_id], references: [id])
+  company_id  String
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+}
+
+model Product {
+  id               String    @id @default(uuid()) @db.VarChar(36)
+  name             String    @db.VarChar(255)
+  description      String?   @db.VarChar(255)
+  price            BigInt    @default(0)
+  code             String    @db.VarChar(255)
+  ean              Json?     @db.Json
+  prince_on_weight Boolean   @default(false)
+  image            String?   @db.Text
+  favorite         Boolean   @default(false)
+  tax_data         Json?     @db.Json
+  priority         Int       @default(0)
+  company          Company   @relation(fields: [company_id], references: [id])
+  company_id       String
+  active           Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime? @updatedAt
+}
+
+model Order {
+  id          String    @id @default(uuid()) @db.VarChar(36)
+  total       BigInt    @default(0)
+  status      String    @db.VarChar(255)
+  Products    Json      @db.Json
+  user        User      @relation(fields: [user_id], references: [id])
+  user_id     String
+  customer    Customer  @relation(fields: [customer_id], references: [id])
+  customer_id String
+  company     Company   @relation(fields: [company_id], references: [id])
+  company_id  String
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+}
+
+model Sale {
+  id          String    @id @default(uuid()) @db.VarChar(36)
+  total       BigInt    @default(0)
+  status      String    @db.VarChar(255)
+  Products    Json      @db.Json
+  user        User      @relation(fields: [user_id], references: [id])
+  user_id     String
+  customer    Customer  @relation(fields: [customer_id], references: [id])
+  customer_id String
+  company     Company   @relation(fields: [company_id], references: [id])
+  company_id  String
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  Payment     Payment[]
+}
+
+model Paymentmethod {
+  id                   String    @id @default(uuid()) @db.VarChar(36)
+  name                 String    @db.VarChar(255)
+  description          String?   @db.VarChar(255)
+  update_cashier_value Boolean   @default(false)
+  company              Company   @relation(fields: [company_id], references: [id])
+  company_id           String
+  active               Boolean   @default(true)
+  Payment              Payment[]
+}
+
+model Payment {
+  id                String        @id @default(uuid()) @db.VarChar(36)
+  amount            BigInt        @default(0)
+  payment_date      DateTime      @default(now())
+  payment_method    Paymentmethod @relation(fields: [payment_method_id], references: [id])
+  payment_method_id String
+  sale              Sale          @relation(fields: [sale_id], references: [id])
+  sale_id           String
+  company           Company       @relation(fields: [company_id], references: [id])
+  company_id        String
+  active            Boolean       @default(true)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime?     @updatedAt
 }

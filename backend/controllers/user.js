@@ -27,11 +27,11 @@ module.exports = (app) => {
       delete user.previous_passwords;
       delete user.address;
       const token = authService().issue(user);
-      const userLogado = {
+      const userLoggedIn = {
         user: user,
         token: token,
       };
-      res.status(200).json(userLogado);
+      res.status(200).json(userLoggedIn);
     } catch (error) {
       res.status(500).json({
         msg: "Unespected error",
@@ -114,12 +114,10 @@ module.exports = (app) => {
     }
   });
 
-  app.get(`/v1${path}/validate-token`, async (req, res) => {
+  app.get(`/auth${path}/validate-token`, async (req, res) => {
     try {
-      const token = req.headers.authorization;
       res.status(200).send({
-        user: req.token,
-        token: token.replace("Bearer ", ""),
+        valid: true,
       });
     } catch (error) {
       console.log(error);

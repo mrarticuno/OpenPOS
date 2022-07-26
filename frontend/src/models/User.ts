@@ -1,3 +1,4 @@
+import { Address } from './Address';
 import { ModelDatabaseConnector as MDC } from './ModelDatabaseConnector';
 import { LocalDatabaseConnector as LDC } from './LocalDatabaseConnector';
 
@@ -14,7 +15,7 @@ export class User extends Connector {
   phone: string;
   active: boolean;
   company_id: string;
-  address_id: string;
+  address: Address;
   role: string;
   confirmation_code: string;
   created_at: string;
@@ -30,7 +31,7 @@ export class User extends Connector {
     this.phone = data.phone || '';
     this.active = data.active || false;
     this.company_id = data.company_id || '';
-    this.address_id = data.address_id || '';
+    this.address = data.address || new Address({});
     this.confirmation_code = data.confirmation_code || '';
     this.password = data.password || '';
     this.created_at = data.created_at || '';

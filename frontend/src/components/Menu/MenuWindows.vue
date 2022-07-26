@@ -1,5 +1,5 @@
 <template>
-  <div class="menu_windows row" v-show="store.isMenuOpen">
+  <div class="menu_windows row" v-show="geralstore.isMenuOpen">
     <div class="inner_container col">
       <div class="search_container">
         <q-input
@@ -33,7 +33,7 @@
           v-for="(item, index) of menuitens"
           :key="index"
           class="menu-item col-3"
-          @click="store.openWindow(item.path)"
+          @click="executeClick(item)"
         >
           <q-icon :name="item.icon" color="white" size="md" />
           <p class="text-white">{{ item.name }}</p>
@@ -45,6 +45,7 @@
 
 <script lang="ts">
 import { geralStore } from 'src/stores/geral-store';
+import { userStore } from 'src/stores/user-store';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
@@ -55,25 +56,40 @@ export default defineComponent({
         {
           name: 'Home',
           icon: 'home',
-          path: '/',
+          path: 'index',
         },
         {
           name: 'Gerenciar',
           icon: 'settings',
-          path: '/gerenciar',
+          path: 'settings',
         },
         {
           name: 'Sair',
           icon: 'mdi-exit-to-app',
-          path: '/sair',
+          path: 'exit',
+          callback: (self: any) => {
+            self.store.setToken('');
+            self.$router.push({ name: 'login' });
+          },
         },
       ],
     };
   },
+  methods: {
+    executeClick(item: any) {
+      if (item.callback) {
+        item.callback(this);
+      } else {
+        this.$router.push({ name: item.path });
+      }
+    },
+  },
   setup() {
-    const store = geralStore();
+    const geralstore = geralStore();
+    const store = userStore();
     const text = ref('');
     return {
+      geralstore,
       store,
       text,
     };

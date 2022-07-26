@@ -1,3 +1,4 @@
+import { Address } from './Address';
 import { ModelDatabaseConnector as MDC } from './ModelDatabaseConnector';
 import { LocalDatabaseConnector as LDC } from './LocalDatabaseConnector';
 
@@ -12,7 +13,7 @@ export class Customer extends Connector {
   document: string;
   email: string;
   phone: string;
-  address_id: string;
+  address: Address;
   company_id: string;
   active: boolean;
   constructor(data: any) {
@@ -24,7 +25,7 @@ export class Customer extends Connector {
     this.email = data.email || '';
     this.phone = data.phone || '';
     this.active = data.active || true;
-    this.address_id = data.address_id || 0;
+    this.address = data.address || new Address({});
     this.company_id = data.company_id || '';
   }
 }

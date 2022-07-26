@@ -1,9 +1,9 @@
 "use strict";
 module.exports = (app) => {
-  app.get("/version", (req, res) => {
+  app.get("/", (req, res) => {
     const infos = {
-      version: env("VERSION"),
-      env: env("ENV"),
+      version: process.env.VERSION,
+      env: process.env.ENV,
     };
 
     res.status(200).send(infos);

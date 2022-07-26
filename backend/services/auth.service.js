@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const secret = env("SECRET");
+const secret = process.env.SECRET || "secret";
 
 const authService = () => {
   const issue = (payload) => jwt.sign(payload, secret, { expiresIn: "7d" });

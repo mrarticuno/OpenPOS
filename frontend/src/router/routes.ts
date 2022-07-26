@@ -19,17 +19,17 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'login',
-        component: () => import('src/pages/login/LoginPage.vue'),
+        component: () => import('src/pages/Login/LoginPage.vue'),
       },
       {
         path: 'confirm',
         name: 'confirm_user',
-        component: () => import('src/pages/login/ConfirmCodeLoginPage.vue'),
+        component: () => import('src/pages/Login/ConfirmCodeLoginPage.vue'),
       },
       {
         path: 'create',
         name: 'create_user',
-        component: () => import('src/pages/login/CreateLoginPage.vue'),
+        component: () => import('src/pages/Login/CreateLoginPage.vue'),
       },
     ],
   },
